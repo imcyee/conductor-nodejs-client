@@ -67,7 +67,7 @@ export default class Watcher {
   private callback: CallbackFunction
   private errorCallback: Function
 
-  private timeoutCache: number
+  private timeoutCache: ReturnType<typeof setTimeout>
 
   constructor(
     taskType: string,

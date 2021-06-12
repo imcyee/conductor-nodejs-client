@@ -67,6 +67,8 @@ export default class Watcher {
   private callback: CallbackFunction
   private errorCallback: Function
 
+  private timeoutCache: number
+
   constructor(
     taskType: string,
     options: ConductorOption,
@@ -167,7 +169,7 @@ export default class Watcher {
     } catch (error) {
       this.errorCallback(error)
     } finally {
-      setTimeout(
+      this.timeoutCache = setTimeout(
         this.polling,
         this.options.pollingIntervals - (new Date().getTime() - this.startTime.getTime())
       )
@@ -209,5 +211,12 @@ export default class Watcher {
     this.isPolling = true
     this.startTime = new Date()
     this.polling()
+  }
+
+  stopPolling = () => {
+    this.isPolling = false
+    if (this.timeoutCache) {
+      clearTimeout(this.timeoutCache)
+    }
   }
 }

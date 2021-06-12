@@ -138,6 +138,15 @@ export default class ConductorClient {
     return this.tasks[taskType]
   }
 
+  unregisterWatcher = (
+    taskType: string
+  ) => {
+    if (!taskType) throw new Error('Task type is required for unregistering watcher')
+    if (this.tasks[taskType]) throw new Error(`Task "${taskType}" is not registered`)
+    this.tasks[taskType].stopPolling()
+    delete this.tasks[taskType]
+  }
+
   startPolling = () => {
     for (const taskType in this.tasks) {
       if (this.tasks[taskType].isPolling === false) this.tasks[taskType].startPolling()

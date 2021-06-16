@@ -431,3 +431,13 @@ export function restartWorkflow(baseURL: string, workflowId: string) {
     url: `/workflow/${workflowId}/restart`
   })
 }
+
+
+export function getCorrelatedWorkflows(baseURL: string, name: string, correlationId: string) {
+  return HTTPClient({
+    method: 'post',
+    baseURL,
+    url: `/workflow/${name}/correlated/${correlationId}`
+  })
+}
+

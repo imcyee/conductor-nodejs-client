@@ -27,7 +27,8 @@ import {
   getRunningWorkflows,
   searchWorkflows,
   updateTask,
-  getTask
+  getTask,
+  getCorrelatedWorkflows
 } from './helper/connector'
 
 export const DEFAULT_OPTIONS = {
@@ -74,6 +75,9 @@ export default class ConductorClient {
 
   getWorkflow = (workflowId: string, includeTasks: boolean = true) =>
     getWorkflow(this.options.baseURL, workflowId, includeTasks)
+
+  getCorrelatedWorkflows = (name, correlationId) =>
+    getCorrelatedWorkflows(this.options.baseURL, name, correlationId)
 
   searchWorkflows = (
     start: number = 0,

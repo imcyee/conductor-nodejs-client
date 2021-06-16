@@ -433,11 +433,15 @@ export function restartWorkflow(baseURL: string, workflowId: string) {
 }
 
 
-export function getCorrelatedWorkflows(baseURL: string, name: string, correlationId: string) {
+export function getCorrelatedWorkflows(baseURL: string, name: string, correlationId: string, includeClosed?: boolean, includeTasks?: boolean) {
   return HTTPClient({
-    method: 'post',
+    method: 'get',
     baseURL,
-    url: `/workflow/${name}/correlated/${correlationId}`
+    url: `/workflow/${name}/correlated/${correlationId}`,
+    params: {
+      includeTasks: includeTasks ? 'true' : 'false',
+      includeClosed: includeClosed ? 'true' : 'false',
+    }
   })
 }
 

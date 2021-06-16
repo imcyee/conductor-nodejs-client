@@ -76,8 +76,8 @@ export default class ConductorClient {
   getWorkflow = (workflowId: string, includeTasks: boolean = true) =>
     getWorkflow(this.options.baseURL, workflowId, includeTasks)
 
-  getCorrelatedWorkflows = (name, correlationId) =>
-    getCorrelatedWorkflows(this.options.baseURL, name, correlationId)
+  getCorrelatedWorkflows = (name: string, correlationId: string, includeClosed?: boolean, includeTasks?: boolean) =>
+    getCorrelatedWorkflows(this.options.baseURL, name, correlationId, includeClosed, includeTasks)
 
   searchWorkflows = (
     start: number = 0,

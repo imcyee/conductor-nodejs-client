@@ -164,7 +164,7 @@ export type Workflow = {
   workflowId: string,
   parentWorkflowId: string,
   parentWorkflowTaskId: string,
-  tasks: Task[],
+  tasks?: Task[],
   input: any,
   output: any,
   correlationId: string,
@@ -424,14 +424,10 @@ export function removeTaskFromQueue(baseURL: string, taskType: string, taskID: s
 }
 
 export function getTaskQueueSizes(baseURL: string, taskNames: string) {
-  // return HTTPClient({
-  //   method: 'post',
-  //   baseURL,
-  //   url: '/tasks/queue/sizes',
-  //   data: taskNames
-  // })
-  return HTTPClient.post('/tasks/queue/sizes', {
+  return HTTPClient({
+    method: 'post',
     baseURL,
+    url: '/tasks/queue/sizes',
     data: taskNames
   })
 }
@@ -447,14 +443,6 @@ export function getWorkflow(baseURL: string, workflowId: string, includeTasks: b
       includeTasks: includeTasks ? 'boolean' : 'false'
     }
   })
-  // return HTTPClient.get<Workflow>({
-  //   method: 'get',
-  //   baseURL,
-  //   url: `/workflow/${workflowId}`,
-  //   params: {
-  //     includeTasks: includeTasks ? 'boolean' : 'false'
-  //   }
-  // })
 }
 
 export function getRunningWorkflows(baseURL: string, workflowName: string, version: number = 1) {
@@ -490,6 +478,15 @@ export function searchWorkflows(
   })
 }
 
+/**
+ * start a workflow
+ * @param baseURL 
+ * @param workflowName 
+ * @param version 
+ * @param correlationId 
+ * @param inputJson 
+ * @returns workflowInstanceId
+ */
 export function startWorkflow(
   baseURL: string,
   workflowName: string,
@@ -498,9 +495,7 @@ export function startWorkflow(
   inputJson: any = {}
 ) {
   return HTTPClient.post<string>(`/workflow/${workflowName}`, {
-    // method: 'post',
     baseURL,
-    // url: `/workflow/${workflowName}`,
     params: {
       version,
       correlationId
@@ -601,9 +596,7 @@ export function restartWorkflow(baseURL: string, workflowId: string) {
 
 export function getCorrelatedWorkflows(baseURL: string, name: string, correlationId: string, includeClosed?: boolean, includeTasks?: boolean) {
   return HTTPClient.get<Workflow[]>(`/workflow/${name}/correlated/${correlationId}`, {
-    // method: 'get',
     baseURL,
-    // url: `/workflow/${name}/correlated/${correlationId}`,
     params: {
       includeTasks: includeTasks ? 'boolean' : 'false',
       includeClosed: includeClosed ? 'boolean' : 'false',

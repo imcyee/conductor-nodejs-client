@@ -11,8 +11,8 @@ const DEFAULT_OPTIONS = {
 }
 
 export type ConductorOption = {
-  baseURL: string
-  workerID: string
+  baseURL?: string
+  workerID?: string
   pollingIntervals: number
   maxRunner: number
   autoAck: boolean

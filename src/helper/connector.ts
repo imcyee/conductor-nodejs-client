@@ -2,6 +2,9 @@ import HTTPClient from 'axios'
 
 HTTPClient.defaults.headers['Content-Type'] = 'application/json'
 
+
+
+
 export type TaskDefinition = {
   name: string
   retryCount: number
@@ -32,10 +35,163 @@ export type WorkflowDefinition = {
   version: number
   tasks: [WorkflowTaskDefinition]
   outputParameters: any
+  inputParameters: any
   failureWorkflow: string
   restartable: boolean
   workflowStatusListenerEnabled: boolean
   schemaVersion: number
+  ownerEmail: string
+  timeoutPolicy?: "ALERT_ONLY" | "TIME_OUT_WF"
+}
+
+export type Task = {
+  taskType: string,
+  status: TaskStatus,
+  inputData: any,
+  referenceTaskName: string,
+  retryCount: number,
+  seq: number,
+  correlationId: string,
+  pollCount: number,
+  taskDefName: string,
+  scheduledTime: number,
+  startTime: number,
+  endTime: number,
+  updateTime: number,
+  startDelayInSeconds: number,
+  retriedTaskId: string,
+  retried: boolean,
+  executed: boolean,
+  callbackFromWorker: boolean,
+  responseTimeoutSeconds: number,
+  workflowInstanceId: string,
+  workflowType: string,
+  taskId: string,
+  reasonForIncompletion: string,
+  callbackAfterSeconds: number,
+  workerId: string,
+  outputData: any,
+  workflowTask: {
+    name: string,
+    taskReferenceName: string,
+    description: string,
+    inputParameters: any,
+    type: string,
+    dynamicTaskNameParam: string,
+    caseValueParam: string,
+    caseExpression: string,
+    scriptExpression: string,
+    decisionCases: any,
+    dynamicForkTasksParam: string,
+    dynamicForkTasksInputParamName: string,
+    defaultCase: any,
+    forkTasks: any,
+    startDelay: number,
+    subWorkflowParam: {
+      name: string,
+      version: number,
+      taskToDomain: any
+    },
+    joinOn: [
+      string
+    ],
+    sink: string,
+    optional: boolean,
+    taskDefinition: {
+      ownerApp: string,
+      createTime: number,
+      updateTime: number,
+      createdBy: string,
+      updatedBy: string,
+      name: string,
+      description: string,
+      retryCount: number,
+      timeoutSeconds: number,
+      inputKeys: [
+        string
+      ],
+      outputKeys: [
+        string
+      ],
+      timeoutPolicy: "RETRY" | "TIME_OUT_WF" | "ALERT_ONLY",
+      retryLogic: "FIXED" | "EXPONENTIAL_BACKOFF",
+      retryDelaySeconds: number,
+      responseTimeoutSeconds: number,
+      concurrentExecLimit: number,
+      inputTemplate: any,
+      rateLimitPerFrequency: number,
+      rateLimitFrequencyInSeconds: number,
+      isolationGroupId: string,
+      executionNameSpace: string,
+      ownerEmail: string,
+      pollTimeoutSeconds: number
+    },
+    rateLimited: boolean,
+    defaultExclusiveJoinTask: [
+      string
+    ],
+    asyncComplete: boolean,
+    loopCondition: string,
+    loopOver: [
+      null
+    ],
+    retryCount: number
+  },
+  domain: string,
+  rateLimitPerFrequency: number,
+  rateLimitFrequencyInSeconds: number,
+  externalInputPayloadStoragePath: string,
+  externalOutputPayloadStoragePath: string,
+  workflowPriority: number,
+  executionNameSpace: string,
+  isolationGroupId: string,
+  iteration: number,
+  subWorkflowId: string,
+  subworkflowChanged: boolean,
+  taskDefinition: TaskDefinition,
+  loopOverTask: boolean,
+  queueWaitTime: number
+}
+
+export type Workflow = {
+  ownerApp: string,
+  createTime: number,
+  updateTime: number,
+  createdBy: string,
+  updatedBy: string,
+  status: WorkflowStatus,
+  endTime: number,
+  workflowId: string,
+  parentWorkflowId: string,
+  parentWorkflowTaskId: string,
+  tasks: Task[],
+  input: any,
+  output: any,
+  correlationId: string,
+  reRunFromWorkflowId: string,
+  reasonForIncompletion: string,
+  event: string,
+  taskToDomain: any,
+  failedReferenceTaskNames: [
+    string
+  ],
+  workflowDefinition: WorkflowDefinition,
+  externalInputPayloadStoragePath: string,
+  externalOutputPayloadStoragePath: string,
+  priority: number,
+  variables: any,
+  lastRetriedTime: number,
+  startTime: number,
+  workflowName: string,
+  workflowVersion: number
+}
+
+export enum WorkflowStatus {
+  RUNNING = 'RUNNING',
+  PAUSED = 'PAUSED',
+  COMPLETE = 'COMPLETED',
+  TIMED_OUT = 'TIMED_OUT',
+  TERMINATED = 'TERMINATED'
 }
 
 export enum TaskStatus {
@@ -280,13 +436,13 @@ export function getTaskQueueSizes(baseURL: string, taskNames: string) {
 /* Workflow Functions */
 /** ********************/
 
-export function getWorkflow(baseURL: string, workflowId: string, includeTasks: boolean = true) {
+export function getWorkflow(baseURL: string, workflowId: string, includeTasks: boolean = false) {
   return HTTPClient({
     method: 'get',
     baseURL,
     url: `/workflow/${workflowId}`,
     params: {
-      includeTasks: includeTasks ? 'true' : 'false'
+      includeTasks: includeTasks ? 'boolean' : 'false'
     }
   })
 }
@@ -439,8 +595,8 @@ export function getCorrelatedWorkflows(baseURL: string, name: string, correlatio
     baseURL,
     url: `/workflow/${name}/correlated/${correlationId}`,
     params: {
-      includeTasks: includeTasks ? 'true' : 'false',
-      includeClosed: includeClosed ? 'true' : 'false',
+      includeTasks: includeTasks ? 'boolean' : 'false',
+      includeClosed: includeClosed ? 'boolean' : 'false',
     }
   })
 }

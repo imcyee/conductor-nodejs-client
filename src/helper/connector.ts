@@ -424,10 +424,14 @@ export function removeTaskFromQueue(baseURL: string, taskType: string, taskID: s
 }
 
 export function getTaskQueueSizes(baseURL: string, taskNames: string) {
-  return HTTPClient({
-    method: 'post',
+  // return HTTPClient({
+  //   method: 'post',
+  //   baseURL,
+  //   url: '/tasks/queue/sizes',
+  //   data: taskNames
+  // })
+  return HTTPClient.post('/tasks/queue/sizes', {
     baseURL,
-    url: '/tasks/queue/sizes',
     data: taskNames
   })
 }
@@ -437,14 +441,20 @@ export function getTaskQueueSizes(baseURL: string, taskNames: string) {
 /** ********************/
 
 export function getWorkflow(baseURL: string, workflowId: string, includeTasks: boolean = false) {
-  return HTTPClient({
-    method: 'get',
+  return HTTPClient.get<Workflow>(`/workflow/${workflowId}`, {
     baseURL,
-    url: `/workflow/${workflowId}`,
     params: {
       includeTasks: includeTasks ? 'boolean' : 'false'
     }
   })
+  // return HTTPClient.get<Workflow>({
+  //   method: 'get',
+  //   baseURL,
+  //   url: `/workflow/${workflowId}`,
+  //   params: {
+  //     includeTasks: includeTasks ? 'boolean' : 'false'
+  //   }
+  // })
 }
 
 export function getRunningWorkflows(baseURL: string, workflowName: string, version: number = 1) {
@@ -487,10 +497,10 @@ export function startWorkflow(
   correlationId: string,
   inputJson: any = {}
 ) {
-  return HTTPClient({
-    method: 'post',
+  return HTTPClient.post<string>(`/workflow/${workflowName}`, {
+    // method: 'post',
     baseURL,
-    url: `/workflow/${workflowName}`,
+    // url: `/workflow/${workflowName}`,
     params: {
       version,
       correlationId
@@ -590,10 +600,10 @@ export function restartWorkflow(baseURL: string, workflowId: string) {
 
 
 export function getCorrelatedWorkflows(baseURL: string, name: string, correlationId: string, includeClosed?: boolean, includeTasks?: boolean) {
-  return HTTPClient({
-    method: 'get',
+  return HTTPClient.get<Workflow[]>(`/workflow/${name}/correlated/${correlationId}`, {
+    // method: 'get',
     baseURL,
-    url: `/workflow/${name}/correlated/${correlationId}`,
+    // url: `/workflow/${name}/correlated/${correlationId}`,
     params: {
       includeTasks: includeTasks ? 'boolean' : 'false',
       includeClosed: includeClosed ? 'boolean' : 'false',

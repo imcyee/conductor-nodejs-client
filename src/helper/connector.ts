@@ -55,20 +55,36 @@ export type TaskDefinition = {
 }
 
 
-export type WorkflowTaskDefinition = {
-  name: string
-  taskReferenceName: string
-  type: WorkflowTaskType
-  inputParameters?: any
-  startDelay?: number
-  optional?: boolean
+export declare interface WorkflowTaskDefinition {
+  name: string;
+  taskReferenceName: string;
+  type: WorkflowTaskType;
+  inputParameters?: any;
+  startDelay?: number;
+  optional?: boolean;
+};
+
+export declare interface WorkflowForkTaskDefinition extends WorkflowTaskDefinition {
+  forkTasks?: (GeneralWorkflowTaskDefinition[])[]
 }
-export type WorkflowDecisionTaskDefinition = WorkflowTaskDefinition & {
-  caseExpression?: string
+
+export declare interface WorkflowJoinTaskDefinition extends WorkflowTaskDefinition {
+  joinOn?: string[]
+}
+
+export declare interface WorkflowDecisionTaskDefinition extends WorkflowTaskDefinition {
+  caseValueParam?: string
+  caseExpression?: string;
   defaultCase?: GeneralWorkflowTaskDefinition[]
-  decisionCases?: GeneralWorkflowTaskDefinition[]
-}
-export type GeneralWorkflowTaskDefinition = WorkflowTaskDefinition | WorkflowDecisionTaskDefinition
+  decisionCases?: { [key: string]: GeneralWorkflowTaskDefinition[] }
+};
+
+
+export declare type GeneralWorkflowTaskDefinition =
+  | WorkflowTaskDefinition
+  | WorkflowDecisionTaskDefinition
+  | WorkflowForkTaskDefinition
+  | WorkflowJoinTaskDefinition
 
 export type WorkflowDefinition = {
   name: string

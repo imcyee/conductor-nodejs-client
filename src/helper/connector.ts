@@ -19,6 +19,22 @@ type WorkflowTimeoutPolicyType =
   | 'ALERT_ONLY' // Registers a counter(task_timeout)
   | string
 
+type WorkflowTaskType =
+  | 'SIMPLE'
+  | 'DECISION'
+  | 'SUB_WORKFLOW'
+  | 'FORK_JOIN'
+  | 'FORK_JOIN_DYNAMIC'
+  | 'EXCLUSIVE_JOIN'
+  | 'DYNAMIC'
+  | 'LAMBDA'
+  | 'TERMINATE'
+  | 'KAFKA_PUBLISH'
+  | 'DO_WHILE'
+  | 'SET_VARIABLE'
+  | string
+
+
 
 export type TaskDefinition = {
   ownerEmail: string;
@@ -41,8 +57,8 @@ export type TaskDefinition = {
 export type WorkflowTaskDefinition = {
   name: string
   taskReferenceName: string
-  type: string
-  inputParameters: any
+  type: WorkflowTaskType
+  inputParameters?: any
   startDelay?: number
   optional?: boolean
 }
@@ -51,7 +67,7 @@ export type WorkflowDefinition = {
   name: string
   description: string
   version: number
-  tasks: [WorkflowTaskDefinition]
+  tasks: WorkflowTaskDefinition[]
   outputParameters: any
   inputParameters: any
   failureWorkflow: string

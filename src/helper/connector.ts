@@ -54,6 +54,7 @@ export type TaskDefinition = {
   [key: string]: any;
 }
 
+
 export type WorkflowTaskDefinition = {
   name: string
   taskReferenceName: string
@@ -62,12 +63,18 @@ export type WorkflowTaskDefinition = {
   startDelay?: number
   optional?: boolean
 }
+export type WorkflowDecisionTaskDefinition = WorkflowTaskDefinition & {
+  caseExpression?: string
+  defaultCase?: GeneralWorkflowTaskDefinition[]
+  decisionCases?: GeneralWorkflowTaskDefinition[]
+}
+export type GeneralWorkflowTaskDefinition = WorkflowTaskDefinition | WorkflowDecisionTaskDefinition
 
 export type WorkflowDefinition = {
   name: string
   description: string
   version: number
-  tasks: WorkflowTaskDefinition[]
+  tasks: GeneralWorkflowTaskDefinition[]
   outputParameters: any
   inputParameters: any
   failureWorkflow: string

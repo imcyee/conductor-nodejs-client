@@ -21,21 +21,21 @@ type WorkflowTimeoutPolicyType =
 
 
 export type TaskDefinition = {
-  ownerEmail: string
-  name: string
-  description?: string
-  retryCount: number
-  timeoutSeconds: number
-  inputKeys: [string]
-  outputKeys: [string]
-  timeoutPolicy: TaskTimeoutPolicyType
-  retryLogic: RetryLogicType
-  retryDelaySeconds: number
-  responseTimeoutSeconds: number
-  concurrentExecLimit: number
-  rateLimitFrequencyInSeconds: number
-  rateLimitPerFrequency: number
-  [key: string]: any
+  ownerEmail: string;
+  name: string;
+  description?: string;
+  retryCount?: number;
+  timeoutSeconds?: number;
+  inputKeys?: string[];
+  outputKeys?: string[];
+  timeoutPolicy?: TaskTimeoutPolicyType;
+  retryLogic?: RetryLogicType;
+  retryDelaySeconds?: number;
+  responseTimeoutSeconds?: number;
+  concurrentExecLimit?: number;
+  rateLimitFrequencyInSeconds?: number;
+  rateLimitPerFrequency?: number;
+  [key: string]: any;
 }
 
 export type WorkflowTaskDefinition = {

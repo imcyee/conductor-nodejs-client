@@ -3,21 +3,39 @@ import HTTPClient from 'axios'
 HTTPClient.defaults.headers['Content-Type'] = 'application/json'
 
 
+type RetryLogicType =
+  | 'FIXED' // Reschedule the task after the retryDelaySeconds
+  | 'EXPONENTIAL_BACKOFF' // Reschedule after retryDelaySeconds  * attemptNumber
+  | string
+
+type TaskTimeoutPolicyType =
+  | 'RETRY' // Retries the task again
+  | 'TIME_OUT_WF' // Workflow is marked as TIMED_OUT and terminated
+  | 'ALERT_ONLY' // Registers a counter(task_timeout)
+  | string
+
+type WorkflowTimeoutPolicyType =
+  | 'TIME_OUT_WF' // Workflow is marked as TIMED_OUT and terminated
+  | 'ALERT_ONLY' // Registers a counter(task_timeout)
+  | string
 
 
 export type TaskDefinition = {
+  ownerEmail: string
   name: string
+  description?: string
   retryCount: number
   timeoutSeconds: number
   inputKeys: [string]
   outputKeys: [string]
-  timeoutPolicy: string
-  retryLogic: string
+  timeoutPolicy: TaskTimeoutPolicyType
+  retryLogic: RetryLogicType
   retryDelaySeconds: number
   responseTimeoutSeconds: number
   concurrentExecLimit: number
   rateLimitFrequencyInSeconds: number
   rateLimitPerFrequency: number
+  [key: string]: any
 }
 
 export type WorkflowTaskDefinition = {
@@ -41,7 +59,7 @@ export type WorkflowDefinition = {
   workflowStatusListenerEnabled: boolean
   schemaVersion: number
   ownerEmail: string
-  timeoutPolicy?: "ALERT_ONLY" | "TIME_OUT_WF"
+  timeoutPolicy?: WorkflowTimeoutPolicyType
 }
 
 export type Task = {
@@ -114,7 +132,7 @@ export type Task = {
         string
       ],
       timeoutPolicy: "RETRY" | "TIME_OUT_WF" | "ALERT_ONLY",
-      retryLogic: "FIXED" | "EXPONENTIAL_BACKOFF",
+      retryLogic: RetryLogicType,
       retryDelaySeconds: number,
       responseTimeoutSeconds: number,
       concurrentExecLimit: number,

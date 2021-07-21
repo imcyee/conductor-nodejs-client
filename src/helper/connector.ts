@@ -6,18 +6,17 @@ HTTPClient.defaults.headers['Content-Type'] = 'application/json'
 type RetryLogicType =
   | 'FIXED' // Reschedule the task after the retryDelaySeconds
   | 'EXPONENTIAL_BACKOFF' // Reschedule after retryDelaySeconds  * attemptNumber
-  | string
+
 
 type TaskTimeoutPolicyType =
   | 'RETRY' // Retries the task again
   | 'TIME_OUT_WF' // Workflow is marked as TIMED_OUT and terminated
   | 'ALERT_ONLY' // Registers a counter(task_timeout)
-  | string
+
 
 type WorkflowTimeoutPolicyType =
   | 'TIME_OUT_WF' // Workflow is marked as TIMED_OUT and terminated
   | 'ALERT_ONLY' // Registers a counter(task_timeout)
-  | string
 
 type WorkflowTaskType =
   | 'SIMPLE'
@@ -34,7 +33,7 @@ type WorkflowTaskType =
   | 'KAFKA_PUBLISH'
   | 'DO_WHILE'
   | 'SET_VARIABLE'
-// | string
+
 
 
 

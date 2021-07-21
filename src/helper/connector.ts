@@ -65,12 +65,19 @@ export declare interface WorkflowTaskDefinition {
   optional?: boolean;
 };
 
+export declare interface WorkflowSubWorkflowTaskDefinition extends WorkflowTaskDefinition {
+  subWorkflowParam: {
+    name: string
+    version: number
+  }
+}
+
 export declare interface WorkflowForkTaskDefinition extends WorkflowTaskDefinition {
-  forkTasks?: (GeneralWorkflowTaskDefinition[])[]
+  forkTasks: (GeneralWorkflowTaskDefinition[])[]
 }
 
 export declare interface WorkflowJoinTaskDefinition extends WorkflowTaskDefinition {
-  joinOn?: string[]
+  joinOn: string[]
 }
 
 export declare interface WorkflowDecisionTaskDefinition extends WorkflowTaskDefinition {
@@ -86,6 +93,7 @@ export declare type GeneralWorkflowTaskDefinition =
   | WorkflowDecisionTaskDefinition
   | WorkflowForkTaskDefinition
   | WorkflowJoinTaskDefinition
+  | WorkflowSubWorkflowTaskDefinition
 
 export type WorkflowDefinition = {
   name: string

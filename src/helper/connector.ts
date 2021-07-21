@@ -21,8 +21,10 @@ type WorkflowTimeoutPolicyType =
 
 type WorkflowTaskType =
   | 'SIMPLE'
+  | 'WAIT'
   | 'DECISION'
   | 'SUB_WORKFLOW'
+  | 'JOIN'
   | 'FORK_JOIN'
   | 'FORK_JOIN_DYNAMIC'
   | 'EXCLUSIVE_JOIN'
@@ -32,7 +34,7 @@ type WorkflowTaskType =
   | 'KAFKA_PUBLISH'
   | 'DO_WHILE'
   | 'SET_VARIABLE'
-  | string
+// | string
 
 
 

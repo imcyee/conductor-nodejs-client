@@ -63,6 +63,11 @@ export declare interface WorkflowTaskDefinition {
   inputParameters?: any;
   startDelay?: number;
   optional?: boolean;
+  /** 
+   * for documentation 
+   * @warn will not be save to conductor server
+   */
+  comment?: string
 };
 
 export declare interface WorkflowSubWorkflowTaskDefinition extends WorkflowTaskDefinition {

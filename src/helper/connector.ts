@@ -43,8 +43,8 @@ export type WorkflowTaskDefinition = {
   taskReferenceName: string
   type: string
   inputParameters: any
-  startDelay: number
-  optional: boolean
+  startDelay?: number
+  optional?: boolean
 }
 
 export type WorkflowDefinition = {

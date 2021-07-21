@@ -95,16 +95,17 @@ export declare type GeneralWorkflowTaskDefinition =
   | WorkflowJoinTaskDefinition
   | WorkflowSubWorkflowTaskDefinition
 
+
 export type WorkflowDefinition = {
   name: string
   description: string
   version: number
   tasks: GeneralWorkflowTaskDefinition[]
-  outputParameters: any
+  outputParameters?: any
   inputParameters: any
-  failureWorkflow: string
-  restartable: boolean
-  workflowStatusListenerEnabled: boolean
+  failureWorkflow?: string
+  restartable?: boolean
+  workflowStatusListenerEnabled?: boolean
   schemaVersion: number
   ownerEmail: string
   timeoutPolicy?: WorkflowTimeoutPolicyType

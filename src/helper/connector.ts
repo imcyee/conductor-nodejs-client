@@ -566,8 +566,10 @@ export function startWorkflow(
   correlationId: string,
   inputJson: any = {}
 ) {
-  return HTTPClient.post<string>(`/workflow/${workflowName}`, {
+  return HTTPClient({
+    method: 'post',
     baseURL,
+    url: `/workflow/${workflowName}`,
     params: {
       version,
       correlationId

@@ -63,7 +63,10 @@ export type TaskDefinition = {
 export declare interface WorkflowTaskDefinition {
   name: string;
   taskReferenceName: string;
-  type: WorkflowTaskType;
+  /**
+   * Skip those type that has own declaration
+   */
+  type: Omit<WorkflowTaskType, 'SWITCH' | 'JOIN' | 'DECISION'>;
   inputParameters?: any;
   startDelay?: number;
   optional?: boolean;

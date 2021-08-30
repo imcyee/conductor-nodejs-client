@@ -86,10 +86,12 @@ export declare interface WorkflowForkTaskDefinition extends WorkflowTaskDefiniti
 }
 
 export declare interface WorkflowJoinTaskDefinition extends WorkflowTaskDefinition {
+  type: 'JOIN',
   joinOn: string[]
 }
 
 export declare interface WorkflowDecisionTaskDefinition extends WorkflowTaskDefinition {
+  type: 'DECISION',
   caseValueParam?: string
   caseExpression?: string;
   defaultCase?: GeneralWorkflowTaskDefinition[]
@@ -97,6 +99,7 @@ export declare interface WorkflowDecisionTaskDefinition extends WorkflowTaskDefi
 };
 
 export declare interface WorkflowSwitchTaskDefinition extends WorkflowTaskDefinition {
+  type: 'SWITCH',
   evaluatorType?: 'value-param' | 'javascript'
   expression?: string;
   defaultCase?: GeneralWorkflowTaskDefinition[]

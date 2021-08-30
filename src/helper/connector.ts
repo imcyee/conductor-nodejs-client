@@ -18,11 +18,11 @@ type WorkflowTimeoutPolicyType =
   | 'TIME_OUT_WF' // Workflow is marked as TIMED_OUT and terminated
   | 'ALERT_ONLY' // Registers a counter(task_timeout)
 
-type WorkflowTaskType =
+export type WorkflowTaskType =
   | 'SWITCH'
   | 'SIMPLE'
   | 'WAIT'
-  /** @deprecated */
+  /** @deprecated use switch instead */
   | 'DECISION'
   | 'SUB_WORKFLOW'
   | 'JOIN'
@@ -30,7 +30,7 @@ type WorkflowTaskType =
   | 'FORK_JOIN_DYNAMIC'
   | 'EXCLUSIVE_JOIN'
   | 'DYNAMIC'
-  /** @deprecated */
+  /** @deprecated use inline instead*/
   | 'LAMBDA'
   | 'INLINE'
   | 'TERMINATE'

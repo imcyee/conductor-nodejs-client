@@ -92,10 +92,17 @@ export declare interface WorkflowDecisionTaskDefinition extends WorkflowTaskDefi
   decisionCases?: { [key: string]: GeneralWorkflowTaskDefinition[] }
 };
 
+export declare interface WorkflowSwitchTaskDefinition extends WorkflowTaskDefinition { 
+  evaluatorType?: 'value-param' | 'javascript'
+  expression?: string;
+  defaultCase?: GeneralWorkflowTaskDefinition[]
+  decisionCases?: { [key: string]: GeneralWorkflowTaskDefinition[] }
+};
 
 export declare type GeneralWorkflowTaskDefinition =
   | WorkflowTaskDefinition
   | WorkflowDecisionTaskDefinition
+  | WorkflowSwitchTaskDefinition
   | WorkflowForkTaskDefinition
   | WorkflowJoinTaskDefinition
   | WorkflowSubWorkflowTaskDefinition

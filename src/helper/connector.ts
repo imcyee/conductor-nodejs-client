@@ -19,8 +19,10 @@ type WorkflowTimeoutPolicyType =
   | 'ALERT_ONLY' // Registers a counter(task_timeout)
 
 type WorkflowTaskType =
+  | 'SWITCH'
   | 'SIMPLE'
   | 'WAIT'
+  /** @deprecated */
   | 'DECISION'
   | 'SUB_WORKFLOW'
   | 'JOIN'
@@ -28,7 +30,9 @@ type WorkflowTaskType =
   | 'FORK_JOIN_DYNAMIC'
   | 'EXCLUSIVE_JOIN'
   | 'DYNAMIC'
+  /** @deprecated */
   | 'LAMBDA'
+  | 'INLINE'
   | 'TERMINATE'
   | 'KAFKA_PUBLISH'
   | 'DO_WHILE'
@@ -92,7 +96,7 @@ export declare interface WorkflowDecisionTaskDefinition extends WorkflowTaskDefi
   decisionCases?: { [key: string]: GeneralWorkflowTaskDefinition[] }
 };
 
-export declare interface WorkflowSwitchTaskDefinition extends WorkflowTaskDefinition { 
+export declare interface WorkflowSwitchTaskDefinition extends WorkflowTaskDefinition {
   evaluatorType?: 'value-param' | 'javascript'
   expression?: string;
   defaultCase?: GeneralWorkflowTaskDefinition[]
